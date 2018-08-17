@@ -89,7 +89,7 @@ exports.generatePDFThumbnail = async (file) => {
     mogrifyProcess.childProcess.kill();
     console.info(`Uploading the resulting thumbnail to the bucket...`);
     await bucket.upload(thumbPath, {
-      destination: `${path}/${fileName}_thumb.jpg`,
+      destination: `${path}thumbs/${fileName}.jpg`,
     });
     console.info(`Deleting temp files...`);
     await Promise.all([
