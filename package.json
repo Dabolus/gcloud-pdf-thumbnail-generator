@@ -1,0 +1,21 @@
+{
+  "name": "gcloud-pdf-thumbnail-generator",
+  "version": "1.0.0",
+  "description": "PDF thumbnail generator for Google Cloud Functions",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dabolus/gcloud-pdf-thumbnail-generator.git"
+  },
+  "author": "Giorgio Garasto <mail@dabolus.app>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@google-cloud/storage": "^1.7.0",
+    "child-process-promise": "^2.2.1",
+    "gs": "https://github.com/sina-masnadi/node-gs/tarball/master"
+  }
+}
