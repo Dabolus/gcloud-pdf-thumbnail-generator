@@ -57,7 +57,7 @@ exports.generatePDFThumbnail = async (file) => {
         .nopause()
         .q()
         .device('jpeg')
-        .executablePath('vendor/lambda-ghostscript/bin/gs')
+        .executablePath(resolve(__dirname, 'vendor/lambda-ghostscript/bin/./gs'))
         .option('-dTextAlphaBits=4')
         .option('-dFirstPage=1')
         .option('-dLastPage=1')
