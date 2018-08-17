@@ -43,14 +43,17 @@ exports.generatePDFThumbnail = async (file) => {
     // Divide the full path into path, file name and extension
     const [_, path, fileName, ext] = /(^.*\/)(.+)\.([^.]+)$/g.exec(file.name);
     if (ext !== 'pdf') {
+      console.info('File is not a PDF, ignoring it.');
       return;
     }
     const pdfPath = resolve(tmpDir, `${fileName}.${ext}`);
     const thumbPath = resolve(tmpDir, `${fileName}.jpg`);
-    console.log(`Generating thumbnail for '${fileName}'...`);
+    console.info(`Generating thumbnail for '${fileName}'...`);
+    console.info(`Downloading the input PDF file...`);
     await bucket.file(file.name).download({
       destination: pdfPath,
     });
+    console.info(`Calling ghostscript to convert the first PDF page into image...`);
     await new Promise((resolve, reject) =>
       gs()
         .batch()
@@ -71,6 +74,7 @@ exports.generatePDFThumbnail = async (file) => {
             resolve();
           }
         }));
+    console.info(`Calling mogrify to resize the output image...`);
     const mogrifyProcess = await spawn('mogrify', [
       '-format', 'jpg',
       '-resize', '340x480',
@@ -83,14 +87,17 @@ exports.generatePDFThumbnail = async (file) => {
       cwd: tmpDir,
     });
     mogrifyProcess.childProcess.kill();
+    console.info(`Uploading the resulting thumbnail to the bucket...`);
     await bucket.upload(thumbPath, {
       destination: `${path}/${fileName}_thumb.jpg`,
     });
+    console.info(`Deleting temp files...`);
     await Promise.all([
       unlink(pdfPath),
       unlink(thumbPath),
     ]);
+    console.info('Done!');
   } catch (e) {
-    console.error(e);
+    console.error('Unexpected error: ', e);
   }
 };
