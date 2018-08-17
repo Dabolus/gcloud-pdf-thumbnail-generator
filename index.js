@@ -4,6 +4,7 @@ const { resolve } = require('path');
 const { spawn } = require('child-process-promise');
 const { tmpdir } = require('os');
 const { unlink: unlinkCb } = require('fs');
+const gs = require('gs');
 const Storage = require('@google-cloud/storage');
 
 const tmpDir = tmpdir();
