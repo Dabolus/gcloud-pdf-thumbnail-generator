@@ -14,7 +14,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@google-cloud/storage": "^1.7.0",
+    "@google-cloud/storage": "^2.4.2",
     "child-process-promise": "^2.2.1",
     "gs": "https://github.com/sina-masnadi/node-gs/tarball/master"
   }
